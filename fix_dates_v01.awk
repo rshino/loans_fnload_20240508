@@ -13,6 +13,7 @@ BEGIN{
 }
 {
     loan_id = $2
+    $3=mmccyy2ccyymm($3) # ACT_PERIOD
     $14=mmccyy2ccyymm($14) # ORIG_DATE
     $15=mmccyy2ccyymm($15) # FIRST_PAY
     $19=mmccyy2ccyymm($19) # MATR_DT

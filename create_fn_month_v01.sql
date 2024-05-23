@@ -110,6 +110,12 @@ CREATE TABLE `fn_month` (
   `ADR_COUNT` decimal(3,0) unsigned DEFAULT NULL,/* 107 */
   `ADR_UPB` decimal(12,2) unsigned DEFAULT NULL,/* 108 */
   `QFILE` varchar(12) NOT NULL,/* */
+  constraint fn_month_act_period_ck
+  	     check((act_period is null or
+	     (cast(substring(act_period from 1 for 4) as unsigned)
+               between 1990 and 2999
+	     and cast(substring(act_period from 5 for 2) as unsigned)
+	       between 1 and 12))),
   constraint fn_month_dlq_status_ck
   	     check((cast(dlq_status as unsigned)
                between 0 and 99)),
