@@ -9,13 +9,17 @@
 # https://capitalmarkets.fanniemae.com/credit-risk-transfer/single-family-credit-risk-transfer/fannie-mae-single-family-loan-performance-data
 # https://datadynamics.fanniemae.com/data-dynamics/#/downloadLoanData/Single-Family
 
-set -xv
+if [ -n "${DEBUG}" ]
+then
+    set -xv
+fi
+
 RUNDIR="${PWD}"
 DBNAME=loans
 TABLENAME=fn_month
 USR=${LOGNAME}
 
-set -xv
+
 
 for quarter in "$@" ##${quarter_list} 
 do
@@ -44,7 +48,7 @@ do
     else
 	export SPLIT_LINES=1000000
 	export PROC=$$
-	time cat "${quarter}" | egrep '^([^\|]*\|){43}\|.*$' \
+	time cat "${quarter}" \
 	| ./fix_dates_v01.awk \
 	| cut -d'|' -f2,3,9,12,16,17,18,40,41,42,49,51,74,102,106,107,108 \
 	| sed -e 's/||/|\\N|/g' -e 's/^|/\\N|/g' \

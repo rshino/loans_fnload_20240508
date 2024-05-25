@@ -117,8 +117,15 @@ CREATE TABLE `fn_month` (
 	     and cast(substring(act_period from 5 for 2) as unsigned)
 	       between 1 and 12))),
   constraint fn_month_dlq_status_ck
-  	     check((cast(dlq_status as unsigned)
-               between 0 and 99)),
+  	     check(
+	     dlq_status REGEXP '^[X0-9][X0-9]'
+	       ),
+#  constraint fn_month_dlq_status_ck
+#  	     check(
+#		(cast(dlq_status as unsigned)
+#               between 0 and 99) or
+#	       (dlq_status='XX')
+#	       ),
   constraint fn_month_last_paid_installment_date_ck
   	     check((last_paid_installment_date is null or
 	     (cast(substring(last_paid_installment_date from 1 for 4) as unsigned)
