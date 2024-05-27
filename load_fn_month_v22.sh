@@ -62,6 +62,7 @@ do
 	    RET=$?
 	    if [ $RET -ne 0 ]
 	    then
+		echo "aborted"
 		exit $RET
 	    fi
 	done
